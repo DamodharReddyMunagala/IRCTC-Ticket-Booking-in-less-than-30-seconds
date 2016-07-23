@@ -1,21 +1,22 @@
 # IRCTC-Ticket-Booking-in-less-than-30-seconds
 from selenium import webdriver
 import time
-def irctcBooking():
+#Date in "day-month-year" format
+def irctcBooking(username, password, start_station, end_station, date_of_journey, age, phone_number):
     path_to_chromedriver = "C:/chromedriver.exe"
     browser = webdriver.Chrome(executable_path = path_to_chromedriver)
     url = 'https://www.irctc.co.in/'
     browser.get(url)
     browser.find_element_by_xpath('//*[@id="usernameId"]').clear()
-    browser.find_element_by_xpath('//*[@id="usernameId"]').send_keys('damu1863')
+    browser.find_element_by_xpath('//*[@id="usernameId"]').send_keys(username)
     browser.find_element_by_xpath('//*[@id="loginFormId"]/div[1]/div[2]/table[1]/tbody/tr[2]/td[2]/input').clear()
-    browser.find_element_by_xpath('//*[@id="loginFormId"]/div[1]/div[2]/table[1]/tbody/tr[2]/td[2]/input').send_keys('djd912')
+    browser.find_element_by_xpath('//*[@id="loginFormId"]/div[1]/div[2]/table[1]/tbody/tr[2]/td[2]/input').send_keys(password)
     # Type the captcha text in these 6 seconds
     time.sleep(5)
     browser.find_element_by_xpath('//*[@id="loginbutton"]').click()
-    browser.find_element_by_xpath('//*[@id="jpform:fromStation"]').send_keys('HYDERABAD DECAN - HYB')
-    browser.find_element_by_xpath('//*[@id="jpform:toStation"]').send_keys('GWALIOR - GWL')
-    browser.find_element_by_xpath('//*[@id="jpform:journeyDateInputDate"]').send_keys('24-07-2016')
+    browser.find_element_by_xpath('//*[@id="jpform:fromStation"]').send_keys(start_station)
+    browser.find_element_by_xpath('//*[@id="jpform:toStation"]').send_keys(end_station)
+    browser.find_element_by_xpath('//*[@id="jpform:journeyDateInputDate"]').send_keys(date_of_journey)
     browser.find_element_by_xpath('//*[@id="jpform:jpsubmit"]').click()
     # If you want to change the select quota from tatkal to the other you can proceed with that
     browser.find_element_by_xpath('//*[@id="qcbd"]/table/tbody/tr/td[5]/input').click()
@@ -24,17 +25,16 @@ def irctcBooking():
     # Click on the Book Now Option in these 5 seconds
     time.sleep(10)
     # Type your name
-    browser.find_element_by_xpath('//*[@id="addPassengerForm:psdetail:0:psgnAge"]').send_keys('21')
+    browser.find_element_by_xpath('//*[@id="addPassengerForm:psdetail:0:psgnAge"]').send_keys(age)
     # Here I have selected Male if you want to change that You can proceed changing option[2] to option[3]
     browser.find_element_by_xpath('//*[@id="addPassengerForm:psdetail:0:psgnGender"]/option[2]').click()
     # Here I am considering the auto upgradation
     browser.find_element_by_xpath('//*[@id="addPassengerForm:autoUpgrade"]').click()
     ## Here I am also considering the book only if confirmed berths are allocated option
     #browser.find_element_by_xpath('//*[@id="addPassengerForm:onlyConfirmBerths"]').click()
-    browser.find_element_by_xpath('//*[@id="addPassengerForm:mobileNo"]').send_keys('8332010182')
+    browser.find_element_by_xpath('//*[@id="addPassengerForm:mobileNo"]').send_keys(phone_number)
     # Scroll down to enter the captcha
     # Here I am making the code to wait to enter the captch if you want more time then you can change it
     time.sleep(10)
     browser.find_element_by_xpath('//*[@id="validate"]').click()
     # Next is payment you can now proceed with this
-irctcBooking()
